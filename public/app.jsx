@@ -19,6 +19,6 @@ var Greater = React.createClass({
 });
 
 ReactDOM.render(
-    <Greater name="{name}" />,
+    <Greater />,
     document.getElementById('app')
 )
