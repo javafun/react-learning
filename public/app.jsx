@@ -1,8 +1,43 @@
-var Greater = React.createClass({
+var GreeterMessage = React.createClass({
+    render: function () {
+        var name = this.props.name;
+        var message = this.props.message;
+
+        return (
+            <div>
+                <h1>Hello {name}!</h1>
+                <p>{message}</p>
+            </div>
+        );
+    }
+});
+
+var GreeterForm = React.createClass({
+    onFormSubmit: function (e) {
+        e.preventDefault();
+
+        var name = this.refs.name.value;
+        if (name.length > 0) {
+            this.refs.name.value = '';
+            this.props.onNewName(name);
+        }
+    },
+    render: function () {
+        return (
+            <form onSubmit={this.onFormSubmit}>
+                <input type="text" ref="name" />
+                <button>Set Name</button>
+            </form>
+        );
+    }
+});
+
+var Greeter = React.createClass({
     // Set default value for properties
     getDefaultProps: function () {
         return {
-            name: "React"
+            name: "React",
+            message: "Some paragraph"
         }
     },
     getInitialState: function () {
@@ -10,32 +45,18 @@ var Greater = React.createClass({
             name: this.props.name
         }
     },
-    onButtonClick: function (e) {
-        e.preventDefault();
-
-        var nameRef = this.refs.name;
-        var name = nameRef.value;
-        nameRef.value = '';
-
-        if (typeof name === 'string' && name.length > 0) {
-            this.setState({
-                name: name
-            });
-        }
+    handleNewName: function (name) {
+        this.setState({
+            name: name
+        })
     },
     render: function () {
         var name = this.state.name;
-
+        var message = this.props.message;
         return (
             <div>
-                <h1>Hello {name}!</h1>
-                <p>This is form a component!</p>
-
-                <form onSubmit={this.onButtonClick}>
-                    <input type="text" ref="name" />
-                    <button>Set Name</button>
-                </form>
-
+                <GreeterMessage name={name} message={message} />
+                <GreeterForm onNewName={this.handleNewName} />
             </div>
         );
     }
@@ -43,6 +64,6 @@ var Greater = React.createClass({
 });
 
 ReactDOM.render(
-    <Greater />,
+    <Greeter />,
     document.getElementById('app')
 )
