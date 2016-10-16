@@ -2,7 +2,7 @@ var Greater = React.createClass({
     // Set default value for properties
     getDefaultProps: function () {
         return{
-            name: "World"
+            name: "React"
         }
     },
     render: function () {
@@ -19,6 +19,6 @@ var Greater = React.createClass({
 });
 
 ReactDOM.render(
-    <Greater />,
+    <Greater name="{name}" />,
     document.getElementById('app')
 )
